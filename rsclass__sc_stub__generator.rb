@@ -179,7 +179,7 @@ def generate__sc_stub__from__rsclass(repo_entry, rest_of_repo)
 	{
 		:destination => {
 			:filename => "#{sc_classname}.sc",
-			:directory => "sc"
+			:filetype => "sc"
 		},
 		:content => apply_template(SC_STUB_TEMPLATE, binding)
 	}

@@ -181,7 +181,7 @@ def generate__rb_stub__from__rsclass(repo_entry, rest_of_repo)
 	{
 		:destination => {
 			:filename => "#{classname}.rb",
-			:directory => "rb"
+			:filetype => "rb"
 		},
 		:content => apply_template(RB_STUB_TEMPLATE, binding)
 	}

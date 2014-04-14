@@ -117,7 +117,7 @@ EOF
 EXAMPLE_RB_STUB_1 = {
 	:destination => {
 		:filename => "example_class.rb",
-		:directory => "rb",
+		:filetype => "rb",
 	},
 	:content => EXAMPLE_RB_STUB_1_CONTENT
 }
@@ -125,7 +125,7 @@ EXAMPLE_RB_STUB_1 = {
 EXAMPLE_RB_STUB_2 = {
 	:destination => {
 		:filename => "example_class_2.rb",
-		:directory => "rb",
+		:filetype => "rb",
 	},
 	:content => EXAMPLE_RB_STUB_2_CONTENT
 }
@@ -133,7 +133,7 @@ EXAMPLE_RB_STUB_2 = {
 EXAMPLE_RB_STUB_3 = {
 	:destination => {
 		:filename => "example_class_3.rb",
-		:directory => "rb",
+		:filetype => "rb",
 	},
 	:content => EXAMPLE_RB_STUB_3_CONTENT
 }
@@ -141,7 +141,7 @@ EXAMPLE_RB_STUB_3 = {
 EXAMPLE_RB_STUB_4 = {
 	:destination => {
 		:filename => "example_class_4.rb",
-		:directory => "rb",
+		:filetype => "rb",
 	},
 	:content => EXAMPLE_RB_STUB_4_CONTENT
 }
@@ -149,7 +149,7 @@ EXAMPLE_RB_STUB_4 = {
 EXAMPLE_RB_STUB_5 = {
 	:destination => {
 		:filename => "example_class_5.rb",
-		:directory => "rb",
+		:filetype => "rb",
 	},
 	:content => EXAMPLE_RB_STUB_5_CONTENT
 }

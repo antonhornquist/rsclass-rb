@@ -137,7 +137,7 @@ EOF
 EXAMPLE_SC_STUB_1 = {
 	:destination => {
 		:filename => "MyModuleExampleClass.sc",
-		:directory => "sc",
+		:filetype => "sc",
 	},
 	:content => EXAMPLE_SC_STUB_1_CONTENT
 }
@@ -145,7 +145,7 @@ EXAMPLE_SC_STUB_1 = {
 EXAMPLE_SC_STUB_2 = {
 	:destination => {
 		:filename => "MyModuleExampleClass2.sc",
-		:directory => "sc",
+		:filetype => "sc",
 	},
 	:content => EXAMPLE_SC_STUB_2_CONTENT
 }
@@ -153,7 +153,7 @@ EXAMPLE_SC_STUB_2 = {
 EXAMPLE_SC_STUB_3 = {
 	:destination => {
 		:filename => "MyModuleExampleClass3.sc",
-		:directory => "sc",
+		:filetype => "sc",
 	},
 	:content => EXAMPLE_SC_STUB_3_CONTENT
 }
@@ -161,7 +161,7 @@ EXAMPLE_SC_STUB_3 = {
 EXAMPLE_SC_STUB_4 = {
 	:destination => {
 		:filename => "MyModuleExampleClass4.sc",
-		:directory => "sc",
+		:filetype => "sc",
 	},
 	:content => EXAMPLE_SC_STUB_4_CONTENT
 }
@@ -169,7 +169,7 @@ EXAMPLE_SC_STUB_4 = {
 EXAMPLE_SC_STUB_5 = {
 	:destination => {
 		:filename => "MyModuleExampleClass5.sc",
-		:directory => "sc",
+		:filetype => "sc",
 	},
 	:content => EXAMPLE_SC_STUB_5_CONTENT
 }
