@@ -3,5 +3,6 @@ require 'rake/testtask'
 task :default => :test
 
 Rake::TestTask.new(:test) do |t|
-	t.pattern = "tc_rsclass.rb"
+	t.test_files = "test/tc_rsclass.rb"
+	t.warning = true
 end
