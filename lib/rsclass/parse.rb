@@ -256,7 +256,7 @@ module RSClass::Parse
 		
 			def __parse_arguments_from_opts__(opts)
 				arguments = ((opts[:argument] ? [opts[:argument]] : nil) or (opts[:arguments] ? opts[:arguments] : nil))
-				arguments ? arguments.map do |arg|
+				arguments ? (arguments.map do |arg|
 					if arg.is_a? Hash
 						def_name = nil
 						def_dv_type = nil
@@ -286,7 +286,7 @@ module RSClass::Parse
 							"name" => arg.to_s
 						}
 					end
-				end : nil
+				end) : nil
 			end
 		
 			def self.parse_value_type(value)
