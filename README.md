@@ -8,7 +8,7 @@ See test cases.
 
 ## Requirements
 
-This library requires the ActiveSupport rubygem.
+This library has no dependencies
 
 ## License
 

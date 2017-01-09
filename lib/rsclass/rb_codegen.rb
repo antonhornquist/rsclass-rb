@@ -1,5 +1,4 @@
 require 'rsclass/codegen_helper'
-# require 'active_support/inflector'
 
 module RSClass::CodeGen
 	class << self
