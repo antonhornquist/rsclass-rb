@@ -1,5 +1,4 @@
 require 'rsclass/codegen_helper'
-require 'active_support/inflector'
 
 module RSClass::CodeGen
 	class << self
@@ -58,7 +57,7 @@ EOT
 						when "writeable" then ">"
 						when nil then ""
 						else raise "bad attribute accessibility for attribute name: #{name}, accessibility: #{accessibility}"
-						end + name.camelize(:lower) + ((initial_value and initial_value["type"] != "nil") ? "=#{render_sc_value(initial_value)}" : "")
+						end + camelize(name, false) + ((initial_value and initial_value["type"] != "nil") ? "=#{render_sc_value(initial_value)}" : "")
 				end.join ",\n\t\t"
 				apply_template(SC_DECLARATION_OF_VARIABLES_TEMPLATE, binding) + "\n"
 			end
@@ -70,14 +69,14 @@ EOT
 		end
 		
 		def render_sc_argument(str, prefix_argument_with_arg)
-			prefix_argument_with_arg ? "arg#{str.camelize}" : str.camelize(:lower)
+			prefix_argument_with_arg ? "arg#{camelize(str)}" : camelize(str, false)
 		end
 		
 		def render_sc_value(defn_value)
 			value = defn_value["value"]
 			type = defn_value["type"]
 			case type
-			when "symbol" then "\\#{value.camelize(:lower)}"
+			when "symbol" then "\\#{camelize(value, false)}"
 			when "string" then ['"', '"'].join(value)
 			else value
 			end
@@ -102,7 +101,7 @@ EOT
 		end
 		
 		def render_sc_method(scope, name, arguments, body, opts={})
-			sc_method_name = (opts[:is_setter] ? "#{name}_" : (opts[:is_cast_method] ? "as_#{name}" : name)).camelize(:lower)
+			sc_method_name = opts[:is_setter] ? camelize(name, false) + "_" : (opts[:is_cast_method] ? camelize("as_#{name}", false) : camelize(name, false))
 			sc_method_name = "*#{sc_method_name}" if scope == "class"
 			sc_method_argument_declarations = render_sc_argument_list(arguments, opts[:prefix_arguments_with_arg])
 			sc_method_body = body ? body.split("\n").map { |line| "\t\t#{line}" }.join("\n") + "\n" : nil
@@ -145,8 +144,8 @@ EOT
 			documentation = defn["documentation"]
 			comments = documentation["comments"]
 		
-			sc_classname = "#{modulename}_#{classname}".camelize
-			sc_superclass = superclass ? "#{modulename}_#{superclass}".camelize : nil
+			sc_classname = camelize("#{modulename}_#{classname}")
+			sc_superclass = superclass ? camelize("#{modulename}_#{superclass}") : nil
 			sc_declaration_of_class_variables = render_sc_declaration_of_variables(:class, class_attributes)
 			sc_declaration_of_instance_variables = render_sc_declaration_of_variables(:instance, instance_attributes)
 		

@@ -1,5 +1,5 @@
 require 'rsclass/codegen_helper'
-require 'active_support/inflector'
+# require 'active_support/inflector'
 
 module RSClass::CodeGen
 	class << self
@@ -165,9 +165,9 @@ EOT
 			documentation = defn["documentation"]
 			comments = documentation["comments"]
 		
-			rb_modulename = modulename.camelize
-			rb_classname = classname.camelize
-			rb_superclass = superclass.camelize if superclass
+			rb_modulename = camelize(modulename)
+			rb_classname = camelize(classname)
+			rb_superclass = camelize(superclass) if superclass
 		
 			rb_class_constants = render_rb_class_constants(class_attributes)
 			rb_class_instance_variables = render_rb_class_instance_variables(class_attributes)

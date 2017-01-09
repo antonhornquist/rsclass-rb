@@ -12,5 +12,14 @@ module RSClass::CodeGen
 				(comments.map { |e| new_entry=e.dup; new_entry[:type] = :comment; new_entry })
 			).sort_by { |hash| hash["ordinal"] }
 		end
+
+		def camelize(lower_case_and_underscored_word, first_letter_in_uppercase = true)
+			words = lower_case_and_underscored_word.split('_')
+			if first_letter_in_uppercase
+				words.map {|e| e.capitalize}.join
+			else
+				words.first + camelize(words[1..-1].join('_'))
+			end
+		end
 	end
 end
