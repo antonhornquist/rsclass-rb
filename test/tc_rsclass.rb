@@ -1,7 +1,6 @@
 require 'test/unit'
 require 'rsclass'
 
-require File.expand_path('../test_helper', __FILE__)
 require File.expand_path('../mock_repo_files', __FILE__)
 require File.expand_path('../mock_parsed_repo', __FILE__)
 require File.expand_path('../mock_rb_stub_files', __FILE__)
