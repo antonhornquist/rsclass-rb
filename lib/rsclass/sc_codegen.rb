@@ -1,3 +1,4 @@
+# TODO: the ugly double assignments below are a quick way to suppress ruby warnings, eventually fix this in a better way
 require 'rsclass/codegen_helper'
 
 module RSClass::CodeGen
@@ -39,15 +40,15 @@ EOT
 EOT
 
 		def render_sc_new_class_method_body(sc_classname, arguments)
-			sc_init_instance_method_name = "init#{sc_classname}"
-			sc_init_arguments = arguments ? arguments.map { |arg| render_sc_argument(arg["name"], false) }.join(', ') : nil
+			sc_init_instance_method_name = sc_init_instance_method_name = "init#{sc_classname}"
+			sc_init_arguments = sc_init_arguments = arguments ? arguments.map { |arg| render_sc_argument(arg["name"], false) }.join(', ') : nil
 			apply_template(SC_NEW_CLASS_METHOD_BODY_TEMPLATE, binding)
 		end
 		
 		def render_sc_declaration_of_variables(scope, attributes)
 			unless attributes.empty?
-				sc_variable_declaration_type = (scope == :instance ? "var" : "classvar")
-				sc_variable_names_with_getter_and_setter_specified = attributes.map do |attr|
+				sc_variable_declaration_type = sc_variable_declaration_type = (scope == :instance ? "var" : "classvar")
+				sc_variable_names_with_getter_and_setter_specified = sc_variable_names_with_getter_and_setter_specified = attributes.map do |attr|
 					name = attr["name"]
 					accessibility = attr["accessibility"]
 					initial_value = attr["initial_value"]
@@ -57,7 +58,7 @@ EOT
 						when "writeable" then ">"
 						when nil then ""
 						else raise "bad attribute accessibility for attribute name: #{name}, accessibility: #{accessibility}"
-						end + camelize(name, false) + ((initial_value and initial_value["type"] != "nil") ? "=#{render_sc_value(initial_value)}" : "")
+					end + camelize(name, false) + ((initial_value and initial_value["type"] != "nil") ? "=#{render_sc_value(initial_value)}" : "")
 				end.join ",\n\t\t"
 				apply_template(SC_DECLARATION_OF_VARIABLES_TEMPLATE, binding) + "\n"
 			end
@@ -103,8 +104,8 @@ EOT
 		def render_sc_method(scope, name, arguments, body, opts={})
 			sc_method_name = opts[:is_setter] ? camelize(name, false) + "_" : (opts[:is_cast_method] ? camelize("as_#{name}", false) : camelize(name, false))
 			sc_method_name = "*#{sc_method_name}" if scope == "class"
-			sc_method_argument_declarations = render_sc_argument_list(arguments, opts[:prefix_arguments_with_arg])
-			sc_method_body = body ? body.split("\n").map { |line| "\t\t#{line}" }.join("\n") + "\n" : nil
+			sc_method_argument_declarations = sc_method_argument_declarations = render_sc_argument_list(arguments, opts[:prefix_arguments_with_arg])
+			sc_method_body = sc_method_body = body ? body.split("\n").map { |line| "\t\t#{line}" }.join("\n") + "\n" : nil
 			apply_template(SC_METHOD_TEMPLATE, binding)
 		end
 		
@@ -145,16 +146,16 @@ EOT
 			comments = documentation["comments"]
 		
 			sc_classname = camelize("#{modulename}_#{classname}")
-			sc_superclass = superclass ? camelize("#{modulename}_#{superclass}") : nil
-			sc_declaration_of_class_variables = render_sc_declaration_of_variables(:class, class_attributes)
-			sc_declaration_of_instance_variables = render_sc_declaration_of_variables(:instance, instance_attributes)
+			sc_superclass = sc_superclass = superclass ? camelize("#{modulename}_#{superclass}") : nil
+			sc_declaration_of_class_variables = sc_declaration_of_class_variables = render_sc_declaration_of_variables(:class, class_attributes)
+			sc_declaration_of_instance_variables = sc_declaration_of_instance_variables = render_sc_declaration_of_variables(:instance, instance_attributes)
 		
 			if init["has_constructor"]
 				if init["sc_init_instance_method_with_same_arguments_as_new"]
 					init_arguments_without_default_values = init["arguments"] ? init["arguments"].map { |arg| { "name" => arg["name"] } } : nil
 			
 					sc_init_instance_method_name = "init#{sc_classname}"
-					sc_init_instance_method = render_sc_method(
+					sc_init_instance_method = sc_init_instance_method = render_sc_method(
 						"instance",
 						sc_init_instance_method_name,
 						init_arguments_without_default_values,
@@ -166,7 +167,7 @@ EOT
 					sc_new_class_method_body = nil
 				end
 			
-				sc_new_class_method = render_sc_method(
+				sc_new_class_method = sc_new_class_method = render_sc_method(
 					"class",
 					"new",
 					init["arguments"],
@@ -175,7 +176,7 @@ EOT
 				) + "\n"
 			end
 		
-			sc_class_body = render_sc_class_body(modulename, classname, methods, comments)
+			sc_class_body = sc_class_body = render_sc_class_body(modulename, classname, methods, comments)
 		
 			{
 				:destination => {

@@ -1,3 +1,4 @@
+# TODO: the ugly double assignments below are a quick way to suppress ruby warnings, eventually fix this in a better way
 require 'rsclass/codegen_helper'
 
 module RSClass::CodeGen
@@ -44,13 +45,13 @@ EOT
 EOT
 		
 		def render_rb_attribute_accessor_shortcut(accessibility, name)
-			rb_accessor = case accessibility
+			rb_accessor = rb_accessor = case accessibility
 				when "readable" then "attr_reader"
 				when "accessable" then "attr_accessor"
 				when "writeable" then "attr_writer"
 				else raise "bad attribute accessibility for attribute name: #{name}, accessibility: #{accessibility}"
-				end
-			rb_attribute_name = name
+			end
+			rb_attribute_name = rb_attribute_name = name
 		
 			apply_template(RB_ATTRIBUTE_ACCESSOR_SHORTCUT_TEMPLATE, binding)
 		end
@@ -61,15 +62,15 @@ EOT
 		end
 		
 		def render_rb_class_instance_variables(class_attributes)
-			rb_class_instance_variable_attribute_accessor_shortcuts = render_rb_class_instance_variable_attribute_accessor_shortcuts(class_attributes)
-			rb_class_instance_variable_attribute_initial_values = render_rb_class_instance_variable_attribute_initial_values(class_attributes)
+			rb_class_instance_variable_attribute_accessor_shortcuts = rb_class_instance_variable_attribute_accessor_shortcuts = render_rb_class_instance_variable_attribute_accessor_shortcuts(class_attributes)
+			rb_class_instance_variable_attribute_initial_values = rb_class_instance_variable_attribute_initial_values = render_rb_class_instance_variable_attribute_initial_values(class_attributes)
 			apply_template(RB_CLASS_INSTANCE_VARIABLES_TEMPLATE, binding)
 		end
 		
 		def render_rb_class_instance_variable_attribute_accessor_shortcuts(class_attributes)
 			class_attributes_to_render = class_attributes.select { |attr| attr["accessibility"] and not attr["render_as_rb_class_constant"] }
 			unless class_attributes_to_render.empty?
-				rb_attribute_accessor_shortcuts = class_attributes_to_render.map { |attr| "\t\t" + render_rb_attribute_accessor_shortcut(attr["accessibility"], attr["name"]) }.join("\n") + "\n"
+				rb_attribute_accessor_shortcuts = rb_attribute_accessor_shortcuts = class_attributes_to_render.map { |attr| "\t\t" + render_rb_attribute_accessor_shortcut(attr["accessibility"], attr["name"]) }.join("\n") + "\n"
 			
 				apply_template(RB_CLASS_INSTANCE_VARIABLE_ATTRIBUTE_ACCESSOR_SHORTCUT_TEMPLATE, binding) + "\n"
 			end
@@ -123,8 +124,8 @@ EOT
 		def render_rb_method(scope, name, arguments, body, opts={})
 			rb_method_name = opts[:is_predicate] ? "#{name}?" : (opts[:is_setter] ? "#{name}=" : (opts[:is_cast_method] ? "to_#{name}" : name))
 			rb_method_name = "self.#{rb_method_name}" if scope == "class"
-			rb_method_argument_declarations = render_rb_argument_list(arguments)
-			rb_method_body = body ? body.split("\n").map { |line| "\t\t#{line}" }.join("\n") + "\n" : nil
+			rb_method_argument_declarations = rb_method_argument_declarations = render_rb_argument_list(arguments)
+			rb_method_body = rb_method_body = body ? body.split("\n").map { |line| "\t\t#{line}" }.join("\n") + "\n" : nil
 			apply_template(RB_METHOD_TEMPLATE, binding)
 		end
 		
@@ -147,7 +148,7 @@ EOT
 		
 		def render_rb_initialize_method_body(instance_attributes)
 			instance_attributes_with_initial_values = instance_attributes.select { |attr| attr["initial_value"] }
-			instance_attributes_with_initial_values.empty? ? nil : (rb_initialize_method_body = instance_attributes_with_initial_values.map { |attr| "@#{attr["name"]} = #{render_rb_value(attr["initial_value"])}" }.join("\n") + "\n")
+			instance_attributes_with_initial_values.empty? ? nil : (instance_attributes_with_initial_values.map { |attr| "@#{attr["name"]} = #{render_rb_value(attr["initial_value"])}" }.join("\n") + "\n")
 		end
 		
 		def generate__rb_stub__from__rsclass(repo_entry, rest_of_repo)
@@ -164,20 +165,20 @@ EOT
 			documentation = defn["documentation"]
 			comments = documentation["comments"]
 		
-			rb_modulename = camelize(modulename)
-			rb_classname = camelize(classname)
-			rb_superclass = camelize(superclass) if superclass
+			rb_modulename = rb_modulename = camelize(modulename)
+			rb_classname = rb_classname = camelize(classname)
+			rb_superclass = rb_superclass = camelize(superclass) if superclass
 		
-			rb_class_constants = render_rb_class_constants(class_attributes)
-			rb_class_instance_variables = render_rb_class_instance_variables(class_attributes)
-			rb_instance_variable_attribute_accessor_shortcuts = render_rb_instance_variable_attribute_accessor_shortcuts(instance_attributes)
-			rb_initialize_method = render_rb_method(
+			rb_class_constants = rb_class_constants = render_rb_class_constants(class_attributes)
+			rb_class_instance_variables = rb_class_instance_variables = render_rb_class_instance_variables(class_attributes)
+			rb_instance_variable_attribute_accessor_shortcuts = rb_instance_variable_attribute_accessor_shortcuts = render_rb_instance_variable_attribute_accessor_shortcuts(instance_attributes)
+			rb_initialize_method = rb_initialize_method = render_rb_method(
 				"instance",
 				"initialize",
 				init["arguments"],
 				render_rb_initialize_method_body(instance_attributes)
 			) + "\n" if init["has_constructor"]
-			rb_class_body = render_rb_class_body(methods, comments)
+			rb_class_body = rb_class_body = render_rb_class_body(methods, comments)
 		
 			{
 				:destination => {
