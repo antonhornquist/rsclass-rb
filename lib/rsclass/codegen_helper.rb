@@ -16,7 +16,13 @@ module RSClass::CodeGen
 		def camelize(lower_case_and_underscored_word, first_letter_in_uppercase = true)
 			words = lower_case_and_underscored_word.split('_')
 			if first_letter_in_uppercase
-				words.map {|e| e.capitalize}.join
+				words.map do |e|
+					if e.upcase == e
+						e
+					else
+						e.capitalize
+					end
+				end.join
 			else
 				words.first + camelize(words[1..-1].join('_'))
 			end
